@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">相册管家</string>
     <string name="action_settings">设置</string>
+    <string name="action_camera">拍照</string>
 </resources>
