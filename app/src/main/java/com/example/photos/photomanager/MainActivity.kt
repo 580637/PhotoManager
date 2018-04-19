@@ -41,8 +41,12 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> {
                 true
             }
-            R.id.action_camera->{
-                Toast.makeText(this,"您点击了拍照",Toast.LENGTH_SHORT).show()
+            R.id.action_camera -> {
+                Toast.makeText(this, "您点击了拍照", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.action_call -> {
+                Toast.makeText(this, "您点击了打电话", Toast.LENGTH_SHORT).show()
                 true
             }
             else -> super.onOptionsItemSelected(item)

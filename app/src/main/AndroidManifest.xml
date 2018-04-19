@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.photos.photomanager">
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <!--阿里聚安全建议将allowBackup属性值显示设置为false：-->
     <application
         android:allowBackup="false"
