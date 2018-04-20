@@ -1,7 +1,10 @@
 package com.example.photos.photomanager
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -9,6 +12,7 @@ import android.widget.Toast
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_main.*
+import java.util.jar.Manifest
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,8 +22,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            Snackbar.make(view , "Replace with your own action" , Snackbar.LENGTH_LONG)
+                    .setAction("Action" , null).show()
         }
 
 
@@ -29,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.menu_main , menu)
         return true
     }
 
@@ -42,11 +46,17 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_camera -> {
-                Toast.makeText(this, "您点击了拍照", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this , "您点击了拍照" , Toast.LENGTH_SHORT).show()
                 true
             }
             R.id.action_call -> {
-                Toast.makeText(this, "您点击了打电话", Toast.LENGTH_SHORT).show()
+                ActivityCompat.requestPermissions(this , Array(1 , { android.Manifest.permission.CALL_PHONE }) , 100)
+//                ActivityCompat.requestPermissions(this , new String []{android.Manifest.permission.CALL_PHONE} , REQUESTCODE);
+                val intent =  Intent()
+                intent.setAction(Intent.ACTION_CALL)
+                intent.setData(Uri.parse("tel:13823159421"))
+                startActivity(intent)
+//                Toast.makeText(this, "您点击了打电话", Toast.LENGTH_SHORT).show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
