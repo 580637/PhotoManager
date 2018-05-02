@@ -27,19 +27,9 @@
             android:name=".CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_camera"
-            android:theme="@style/FullscreenTheme">
+            android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
                 <action android:name="app.action.camera" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ScrollingActivity"
-            android:label="@string/title_activity_scrolling"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="app.action.cameratest" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
