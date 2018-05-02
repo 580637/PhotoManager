@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">相册管家</string>
-    <string name="action_settings">设置</string>
-    <string name="action_camera">拍照</string>
-    <string name="action_call">打电话</string>
+    <string name="btn_camera">相机</string>
+
+    <string name="title_activity_camera">Camera</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>

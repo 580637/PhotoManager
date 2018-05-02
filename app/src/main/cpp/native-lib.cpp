@@ -1,11 +1,10 @@
 #include <jni.h>
 #include <string>
 
-extern "C"
-JNIEXPORT jstring
+extern "C" JNIEXPORT jstring
 
 JNICALL
-Java_com_example_photos_photomanager_MainActivity_stringFromJNI(
+Java_com_brinjaul_manager_MainActivity_stringFromJNI(
         JNIEnv *env,
         jobject /* this */) {
     std::string hello = "Hello from C++";
