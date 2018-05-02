@@ -7,10 +7,14 @@ import android.os.Bundle
 import com.brinjaul.androidlib.CameraUtil
 import com.brinjaul.androidlib.CameraPreview
 import kotlinx.android.synthetic.main.activity_camera.*
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
+
 
 class CameraActivity : AppCompatActivity() {
     private var mCamera: Camera? = null
     private var mPreview: CameraPreview? = null
+    private var mPermissions: Array<String> = arrayOf(android.Manifest.permission.CAMERA , android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
     fun initCamera() {
         if (!packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
             // TODO 未检测到系统的相机
@@ -57,6 +61,12 @@ class CameraActivity : AppCompatActivity() {
         mPreview!!.setCamera(mCamera!!)
     }
 
+    private fun startCamera() {
+
+        mPreview = CameraPreview(this)
+        camera_preview.addView(mPreview)
+    }
+
     /**
      * 释放相机和预览
      */
@@ -70,9 +80,23 @@ class CameraActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var checkResult: Int = ContextCompat.checkSelfPermission(this , mPermissions[0])
         setContentView(R.layout.activity_camera)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        mPreview = CameraPreview(this)
-        camera_preview.addView(mPreview)
+        if (checkResult != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this , mPermissions , 100)
+        } else {
+            startCamera()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int , permissions: Array<out String> , grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode , permissions , grantResults)
+
+        when (requestCode) {
+            100 -> {
+                startCamera()
+            }
+        }
     }
 }
