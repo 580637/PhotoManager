@@ -4,14 +4,19 @@ import android.content.pm.PackageManager
 import android.hardware.Camera
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import com.brinjaul.androidlib.CameraUtil
 import com.brinjaul.androidlib.CameraPreview
 import kotlinx.android.synthetic.main.activity_camera.*
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
 
 
-class CameraActivity : AppCompatActivity() {
+class CameraActivity : AppCompatActivity() , Camera.PictureCallback {
     private var mCamera: Camera? = null
     private var mPreview: CameraPreview? = null
     private var mPermissions: Array<String> = arrayOf(android.Manifest.permission.CAMERA , android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -80,13 +85,45 @@ class CameraActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         var checkResult: Int = ContextCompat.checkSelfPermission(this , mPermissions[0])
-        setContentView(R.layout.activity_camera)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         if (checkResult != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this , mPermissions , 100)
-        } else {
-            startCamera()
+            return
+        }
+        setContentView(R.layout.activity_camera)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        startCamera()
+        camera_take_photo.setOnClickListener {
+            mCamera!!.takePicture(null , null , this)
+        }
+    }
+
+    override fun onPictureTaken(data: ByteArray , camera: Camera) {
+        val appDir = File(Environment.getExternalStorageDirectory() , Environment.DIRECTORY_DCIM + "/ByronTest")
+        if (!appDir.exists()) {
+            appDir.mkdirs()
+        }
+        val fileName = System.currentTimeMillis().toString() + ".jpg"
+        val pictureFile = File(appDir , fileName)
+        if (pictureFile.exists()) {
+            pictureFile.delete()
+        }
+        pictureFile.createNewFile()
+        var output: OutputStream? = null
+        try {
+            output = FileOutputStream(pictureFile)
+            output.write(data)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } finally {
+            if (output != null) {
+                try {
+                    output.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
         }
     }
 
