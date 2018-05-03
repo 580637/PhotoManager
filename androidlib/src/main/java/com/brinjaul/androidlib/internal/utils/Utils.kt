@@ -9,9 +9,6 @@ import android.view.Surface
 import android.view.WindowManager
 import android.webkit.MimeTypeMap
 
-/*
- * Created by memfis on 7/18/16.
- */
 object Utils {
 
     fun getDeviceDefaultOrientation(context: Context): Int {
